@@ -1,4 +1,4 @@
-namespace PInvoke
+namespace PureInvoke
 {
 	public static class WinError
 	{

@@ -1,6 +1,6 @@
 # Overview
 
-The "PInvoke" module...
+The "PureInvoke" module...
 
 # System Requirements
 
@@ -12,15 +12,15 @@ The "PInvoke" module...
 To install globally:
 
 ```powershell
-Install-Module -Name 'PInvoke'
-Import-Module -Name 'PInvoke'
+Install-Module -Name 'PureInvoke'
+Import-Module -Name 'PureInvoke'
 ```
 
 To install privately:
 
 ```powershell
-Save-Module -Name 'PInvoke' -Path '.'
-Import-Module -Name '.\PInvoke'
+Save-Module -Name 'PureInvoke' -Path '.'
+Import-Module -Name '.\PureInvoke'
 ```
 
 # Commands

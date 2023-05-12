@@ -1,5 +1,5 @@
 
-function Write-PWin32Error
+function Write-Win32Error
 {
     [CmdletBinding()]
     param(

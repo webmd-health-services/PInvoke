@@ -4,7 +4,7 @@ using System.Runtime.InteropServices;
 using System.Security.Principal;
 using System.Text;
 
-namespace PInvoke
+namespace PureInvoke
 {
 	public static class AdvApi32
 	{

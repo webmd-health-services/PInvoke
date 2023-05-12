@@ -17,7 +17,7 @@ BeforeAll {
         )
 
         $verbs =
-            Get-Command -Module 'PInvoke'|
+            Get-Command -Module 'PureInvoke'|
             Where-Object { $_ -isnot [Management.Automation.AliasInfo] } |
             Select-Object -ExpandProperty Verb |
             Select-Object -Unique
@@ -64,10 +64,10 @@ BeforeAll {
     }
 }
 
-Describe 'PInvoke' {
+Describe 'PureInvoke' {
     It 'should have about help topic' {
         GivenModuleImported
-        ThenHelpTopic 'about_PInvoke' -Exists
+        ThenHelpTopic 'about_PureInvoke' -Exists
     }
 
     It 'should only use approved verbs' {
@@ -77,7 +77,7 @@ Describe 'PInvoke' {
 
     It 'should have a help topic for each command' {
         GivenModuleImported
-        foreach( $cmd in (Get-Command -Module 'PInvoke' -CommandType Function,Cmdlet,Filter))
+        foreach( $cmd in (Get-Command -Module 'PureInvoke' -CommandType Function,Cmdlet,Filter))
         {
             ThenHelpTopic $cmd.Name -Exists -HasSynopsis -HasDescription -HasExamples
         }

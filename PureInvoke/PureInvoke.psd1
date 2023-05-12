@@ -15,7 +15,7 @@
 @{
 
     # Script module or binary module file associated with this manifest.
-    RootModule = 'PInvoke.psm1'
+    RootModule = 'PureInvoke.psm1'
 
     # Version number of this module.
     ModuleVersion = '1.0.0'
@@ -76,8 +76,8 @@
 
     # Functions to export from this module. Only list public function here.
     FunctionsToExport = @(
-        'Invoke-PLookupAccountName',
-        'Invoke-PLookupAccountSid'
+        'Invoke-AdvapiLookupAccountName',
+        'Invoke-AdvapiLookupAccountSid'
     )
 
     # Cmdlets to export from this module. By default, you get a script module, so there are no cmdlets.
@@ -104,13 +104,13 @@
         PSData = @{
 
             # Tags applied to this module. These help with module discovery in online galleries.
-            Tags = @( 'Desktop', 'Core' )
+            Tags = @( 'Desktop', 'Core', 'pinvoke', 'platform', 'invoke', 'advapi32', 'lookupaccountname', 'lookupaccountsid' )
 
             # A URL to the license for this module.
             LicenseUri = 'http://www.apache.org/licenses/LICENSE-2.0'
 
             # A URL to the main website for this project.
-            ProjectUri = 'https://github.com/webmd-health-services/PInvoke'
+            ProjectUri = 'https://github.com/webmd-health-services/PureInvoke'
 
             # A URL to an icon representing this module.
             # IconUri = ''
@@ -118,7 +118,7 @@
             Prerelease = ''
 
             # ReleaseNotes of this module
-            ReleaseNotes = 'https://github.com/webmd-health-services/PInvoke/blob/main/CHANGELOG.md'
+            ReleaseNotes = 'https://github.com/webmd-health-services/PureInvoke/blob/main/CHANGELOG.md'
         } # End of PSData hashtable
 
     } # End of PrivateData hashtable

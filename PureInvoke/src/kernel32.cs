@@ -2,7 +2,7 @@ using System;
 using System.ComponentModel;
 using System.Runtime.InteropServices;
 
-namespace PInvoke
+namespace PureInvoke
 {
 	public static class kernel32
 	{

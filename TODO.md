@@ -11,8 +11,8 @@ The script will:
 
 * Rename this file to TODO.md (there are additional steps to take afterward)
 * Puts the default README.md file in place.
-* Rename every file that has `PInvoke` in its name, replacing `PInvoke` with the module name.
-* Replaces `PInvoke` in every file with the module name.
+* Rename every file that has `PureInvoke` in its name, replacing `PureInvoke` with the module name.
+* Replaces `PureInvoke` in every file with the module name.
 * Installs and enables [Whiskey](https://github.com/webmd-health-services/Whiskey/wiki).
 * Removes this script.
 * If Git is installed, adds all the changes, and amends the initial commit with them so all traces of the template are

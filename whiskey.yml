@@ -5,7 +5,7 @@ Build:
     ScriptBlock: prism install | Format-Table -Auto
 
 - Version:
-    Path: PInvoke\PInvoke.psd1
+    Path: PureInvoke\PureInvoke.psd1
     Prerelease:
     - main: ""
     - "*": rc1
@@ -21,10 +21,10 @@ Build:
 - MergeFile:
     OnlyBy: BuildServer
     # Builds run twice on some serves. Only run this step if the module hasn't been merged yet.
-    IfExists: PInvoke\Functions\*.ps1
+    IfExists: PureInvoke\Functions\*.ps1
     Path:
-    - PInvoke\Functions\*.ps1
-    DestinationPath: PInvoke\PInvoke.psm1
+    - PureInvoke\Functions\*.ps1
+    DestinationPath: PureInvoke\PureInvoke.psm1
     DeleteSourceFiles: true
     TextSeparator: "$(NewLine)$(NewLine)"
 
@@ -42,12 +42,12 @@ Build:
     - README.md
     - LICENSE.txt
     - NOTICE.txt
-    DestinationDirectory: PInvoke
+    DestinationDirectory: PureInvoke
 
 - Zip:
-    ArchivePath: .output\PInvoke-$(WHISKEY_SEMVER2).zip
+    ArchivePath: .output\PureInvoke-$(WHISKEY_SEMVER2).zip
     Path:
-    - PInvoke
+    - PureInvoke
     Exclude:
     - "*.pdb"
     - "*.orig"
@@ -55,7 +55,7 @@ Build:
 - Exec:
     OnlyBy: BuildServer
     Path: appveyor
-    Argument: [ 'PushArtifact', '.output/PInvoke-$(WHISKEY_SEMVER2).zip', '-DeploymentName', 'GitHub' ]
+    Argument: [ 'PushArtifact', '.output/PureInvoke-$(WHISKEY_SEMVER2).zip', '-DeploymentName', 'GitHub' ]
 
 - Pester:
     Configuration:
@@ -66,19 +66,19 @@ Build:
         TestResult:
             Enabled: true
             OutputPath: .output\pester.xml
-            TestSuiteName: PInvoke
+            TestSuiteName: PureInvoke
         Output:
             Verbosity: Detailed
 
 - PublishPowerShellModule:
-    Path: PInvoke
+    Path: PureInvoke
 
 - Exec:
     OnlyBy: BuildServer
     Path: appveyor
     Argument: [
         'PushArtifact',
-        '.output/PInvoke.$(WHISKEY_SEMVER2_NO_BUILD_METADATA).nupkg',
+        '.output/PureInvoke.$(WHISKEY_SEMVER2_NO_BUILD_METADATA).nupkg',
         '-DeploymentName',
         'PowerShellGallery'
     ]

@@ -1,7 +1,7 @@
 
-# PInvoke PowerShell Module Changelog
+# PureInvoke PowerShell Module Changelog
 
 ## 1.0.0
 
-* Created `Invoke-PLookupAccountName` to call the Advapi `LookupAccountName` function.
-* Created `Invoke-PLookupAccountSid` to call the Advapi `LookupAccountName` function.
+* Created `Invoke-AdvapiLookupAccountName` to call the Advapi `LookupAccountName` function.
+* Created `Invoke-AdvapiLookupAccountSid` to call the Advapi `LookupAccountName` function.
