@@ -36,7 +36,7 @@
     Copyright = '(c) WebMD Health Services.'
 
     # Description of the functionality provided by this module
-    Description = ''
+    Description = 'Exposes Win32 API functions as PowerShell commands using .NET''s platform invoke (e.g. p/invoke) capabilities.'
 
     # Minimum version of the Windows PowerShell engine required by this module
     PowerShellVersion = '5.1'
