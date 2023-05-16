@@ -48,32 +48,36 @@ function Invoke-AdvapiLookupAccountName
     [UInt32] $cchDomainName = $domainName.Capacity;
     [PureInvoke.AdvApi32+SidNameUse] $sidNameUse = [PureInvoke.AdvApi32+SidNameUse]::Unknown;
 
-    $err = [PureInvoke.WinError]::Ok
-    if ([PureInvoke.AdvApi32]::LookupAccountName($SystemName, $AccountName,
-                                              $sid, [ref] $cbSid,
-                                              $domainName, [ref] $cchDomainName,
-                                              [ref]$sidNameUse))
+    [PureInvoke.ErrorCode]$errCode = [PureInvoke.ErrorCode]::Ok
+    $result = [PureInvoke.AdvApi32]::LookupAccountName($SystemName, $AccountName,
+                                                       $sid, [ref] $cbSid,
+                                                       $domainName, [ref] $cchDomainName,
+                                                       [ref]$sidNameUse)
+    $errCode = [Marshal]::GetLastWin32Error()
+    if ($result)
     {
-        Write-Win32Error
+
+        Write-Win32Error -ErrorCode $errCode
         return
     }
 
-    $err = [Marshal]::GetLastWin32Error();
-    if ($err -eq [PureInvoke.WinError]::InsufficientBuffer -or $err -eq [PureInvoke.WinError]::InvalidFlags)
+    if ($errCode -eq [PureInvoke.ErrorCode]::InsufficientBuffer -or $errCode -eq [PureInvoke.ErrorCode]::InvalidFlags)
     {
         $sid = [byte[]]::New($cbSid);
         [void]$domainName.EnsureCapacity([int]$cchDomainName);
-        if (-not [PureInvoke.AdvApi32]::LookupAccountName($SystemName, $AccountName, $sid, [ref] $cbSid,
-                                                       $domainName, [ref] $cchDomainName,
-                                                       [ref] $sidNameUse))
+        $result = [PureInvoke.AdvApi32]::LookupAccountName($SystemName, $AccountName, $sid, [ref] $cbSid,
+                                                           $domainName, [ref] $cchDomainName,
+                                                           [ref] $sidNameUse)
+        $errCode = [Marshal]::GetLastWin32Error()
+        if (-not $result)
         {
-            Write-Win32Error
+            Write-Win32Error -ErrorCode $errCode
             return
         }
     }
     else
     {
-        Write-Win32Error
+        Write-Win32Error -ErrorCode $errCode
         return
     }
 

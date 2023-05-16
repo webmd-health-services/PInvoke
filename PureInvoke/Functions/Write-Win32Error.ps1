@@ -3,6 +3,9 @@ function Write-Win32Error
 {
     [CmdletBinding()]
     param(
+        [Parameter(Mandatory)]
+        [PureInvoke.ErrorCode] $ErrorCode,
+
         [String] $Message
     )
 
@@ -15,7 +18,7 @@ function Write-Win32Error
         $Message = "${Message}: "
     }
 
-    $win32Ex = [Win32Exception]::New()
+    $win32Ex = [Win32Exception]::New($ErrorCode)
     $msg = "${Message}$($win32Ex.Message) (0x$($win32Ex.ErrorCode.ToString('x'))/$($win32Ex.NativeErrorCode))."
     Write-Error -Message $msg -ErrorAction $ErrorActionPreference
 }

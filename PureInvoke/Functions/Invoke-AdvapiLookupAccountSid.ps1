@@ -46,28 +46,28 @@ function Invoke-AdvapiLookupAccountSid
 
     [PureInvoke.AdvApi32+SidNameUse] $sidNameUse = [PureInvoke.AdvApi32+SidNameUse]::Unknown;
 
-    $err = [PureInvoke.WinError]::Ok
+    [PureInvoke.ErrorCode] $errCode = [PureInvoke.ErrorCode]::Ok
 
-    if (-not ([PureInvoke.AdvApi32]::LookupAccountSid($SystemName, $sid, $name, [ref] $cchName,
-                                                   $domainName, [ref] $cchDomainName, [ref] $sidNameUse)))
+    $result = [PureInvoke.AdvApi32]::LookupAccountSid($SystemName, $sid, $name, [ref] $cchName,
+                                                   $domainName, [ref] $cchDomainName, [ref] $sidNameUse)
+    $errCode = [Marshal]::GetLastWin32Error()
+    if (-not $result -and ($errCode -eq [PureInvoke.ErrorCode]::InsufficientBuffer))
     {
-        $err = [Marshal]::GetLastWin32Error();
-        if ($err -eq [PureInvoke.WinError]::InsufficientBuffer)
+        [void]$name.EnsureCapacity($cchName);
+        [void]$domainName.EnsureCapacity($cchName);
+        $result = [PureInvoke.AdvApi32]::LookupAccountSid($SystemName, $sid,  $name, [ref] $cchName,
+                                                            $domainName, $cchDomainName, [ref] $sidNameUse)
+        $errCode = [Marshal]::GetLastWin32Error()
+        if (-not $result)
         {
-            [void]$name.EnsureCapacity([int]$cchName);
-            [void]$domainName.EnsureCapacity([int]$cchName);
-            $err = 0
-            if (-not [PureInvoke.AdvApi32]::LookupAccountSid($SystemName, $sid,  $name, [ref] $cchName,
-                                                        $domainName, $cchDomainName, [ref] $sidNameUse))
-            {
-                $err = [Marshal]::GetLastWin32Error()
-            }
+            Write-Win32Error -ErrorCode $errCode
+            return
         }
     }
 
-    if ($err)
+    if ($errCode)
     {
-        Write-Win32Error
+        Write-Win32Error -ErrorCode $errCode
         return
     }
 
