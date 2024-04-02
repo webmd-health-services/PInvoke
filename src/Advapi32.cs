@@ -8,12 +8,6 @@ namespace PureInvoke
 {
 	public static class AdvApi32
 	{
-		// ReSharper disable InconsistentNaming
-		[DllImport("advapi32", CharSet=CharSet.Auto, SetLastError=true)]
-		public static extern bool ConvertSidToStringSid(
-			[MarshalAs(UnmanagedType.LPArray)] byte[] pSID,
-			out IntPtr ptrSid);
-
 		[DllImport("advapi32.dll", CharSet=CharSet.Auto, SetLastError=true)]
 		public static extern bool LookupAccountName(
 			string lpSystemName,
