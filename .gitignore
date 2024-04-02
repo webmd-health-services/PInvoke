@@ -5,3 +5,7 @@
 /PureInvoke/LICENSE.txt
 /PureInvoke/NOTICE.txt
 /PureInvoke/README.md
+**/bin/**
+**/obj/**
+**/.vs/**
+/packages/

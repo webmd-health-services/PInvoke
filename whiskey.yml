@@ -16,6 +16,13 @@ Build:
       Path: appveyor
       Argument: [ UpdateBuild, -Version, "$(WHISKEY_SEMVER2)+$(WHISKEY_BUILD_NUMBER)" ]
 
+- MSBuild:
+    Path: src\PureInvoke.sln
+
+- CopyFile:
+    Path: src\bin\netstandard2.0\*
+    DestinationDirectory: PureInvoke\bin
+
 # Dot-sourcing files is expensive. Move all functions into .psm1 file to improve import speed. Do this before testing
 # to ensure the module still works.
 - MergeFile:

@@ -23,10 +23,6 @@ Set-StrictMode -Version 'Latest'
 # module in development has its functions in the Functions directory.
 $script:moduleRoot = $PSScriptRoot
 
-foreach ($csFile in (Get-ChildItem -Path (Join-Path -Path $script:moduleRoot -ChildPath 'src') -Filter '*.cs'))
-{
-    Add-Type -TypeDefinition (Get-Content -Raw -Path $csFile.FullName)
-}
 
 # Store each of your module's functions in its own file in the Functions
 # directory. On the build server, your module's functions will be appended to

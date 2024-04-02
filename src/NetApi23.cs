@@ -1,5 +1,4 @@
 using System;
-using System.ComponentModel;
 using System.Runtime.InteropServices;
 
 namespace PureInvoke
@@ -7,7 +6,7 @@ namespace PureInvoke
 	public static class NetApi32
 	{
 
-		[DllImport("NetApi32.dll", CharSet = CharSet.Auto, SetLastError = true)]
+		[DllImport("netapi32.dll", CharSet = CharSet.Auto, SetLastError = true)]
 		public static extern int NetLocalGroupAddMembers(
 			string servername, //server name
 			string groupname, //group name
@@ -16,7 +15,7 @@ namespace PureInvoke
 			UInt32 totalentries //number of entries
 		);
 
-		[DllImport("NetApi32.dll", CharSet = CharSet.Auto, SetLastError = true)]
+		[DllImport("netapi32.dll", CharSet = CharSet.Auto, SetLastError = true)]
 		public static extern int NetLocalGroupDelMembers(
 			string servername, //server name
 			string groupname, //group name

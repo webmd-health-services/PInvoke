@@ -1,12 +1,10 @@
 using System;
-using System.ComponentModel;
 using System.Runtime.InteropServices;
-using System.Security.Principal;
 using System.Text;
 
 namespace PureInvoke
 {
-	public static class Advapi32
+	public static class AdvApi32
 	{
 		// ReSharper disable InconsistentNaming
 		[DllImport("advapi32", CharSet=CharSet.Auto, SetLastError=true)]
@@ -36,8 +34,9 @@ namespace PureInvoke
 			out SidNameUse peUse
 		);
 
-		public enum SidNameUse {
-			User=1,
+		public enum SidNameUse
+		{
+			User = 1,
 			Group,
 			Domain,
 			Alias,
@@ -50,4 +49,5 @@ namespace PureInvoke
 			LogonSession
 		}
 	}
+
 }
