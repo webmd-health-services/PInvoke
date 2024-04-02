@@ -38,8 +38,6 @@ function Invoke-KernelFindFileName
     # Loop over and collect all hard links as their full paths.
     [IntPtr]$findHandle = [IntPtr]::Zero
 
-    # Must be MAX_PATH otherwise calls to FindFirstFileName@ and FindNextFileNameW throw exceptions that crash
-    # PowerShell.
     [Text.StringBuilder] $sbLinkName = [Text.StringBuilder]::New()
     [UInt32] $cchLinkName = $sbLinkName.Capacity
     $findHandle = [PureInvoke.Kernel32]::FindFirstFileNameW($Path, 0, [ref]$cchLinkName, $sbLinkName)
