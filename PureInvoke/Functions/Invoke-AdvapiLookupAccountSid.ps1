@@ -31,12 +31,6 @@ function Invoke-AdvApiLookupAccountSid
     Set-StrictMode -Version 'Latest'
     Use-CallerPreference -Cmdlet $PSCmdlet -Session $ExecutionContext.SessionState
 
-    $result = [pscustomobject]@{
-        Name = '';
-        ReferencedDomainName = ''
-        Use = [PureInvoke.WinNT.SidNameUse]::Unknown
-    }
-
     [Text.StringBuilder] $name = [Text.StringBuilder]::New()
     # cch = count of chars
     [UInt32] $cchName = $name.Capacity;
@@ -48,32 +42,26 @@ function Invoke-AdvApiLookupAccountSid
 
     [PureInvoke.ErrorCode] $errCode = [PureInvoke.ErrorCode]::Ok
 
-    $result = [PureInvoke.AdvApi32]::LookupAccountSid($SystemName, $sid, $name, [ref] $cchName,
-                                                   $domainName, [ref] $cchDomainName, [ref] $sidNameUse)
+    [void][PureInvoke.AdvApi32]::LookupAccountSid($SystemName, $sid, $name, [ref] $cchName, $domainName,
+                                                  [ref] $cchDomainName, [ref] $sidNameUse)
     $errCode = [Marshal]::GetLastWin32Error()
-    if (-not $result -and ($errCode -eq [PureInvoke.ErrorCode]::InsufficientBuffer))
+    if (($errCode -eq [PureInvoke.ErrorCode]::InsufficientBuffer))
     {
         [void]$name.EnsureCapacity($cchName);
         [void]$domainName.EnsureCapacity($cchName);
-        $result = [PureInvoke.AdvApi32]::LookupAccountSid($SystemName, $sid,  $name, [ref] $cchName,
-                                                            $domainName, $cchDomainName, [ref] $sidNameUse)
+        [void][PureInvoke.AdvApi32]::LookupAccountSid($SystemName, $sid,  $name, [ref] $cchName, $domainName,
+                                                      $cchDomainName, [ref] $sidNameUse)
         $errCode = [Marshal]::GetLastWin32Error()
-        if (-not $result)
-        {
-            Write-Win32Error -ErrorCode $errCode
-            return
-        }
     }
 
-    if ($errCode)
+    if (-not (Assert-Win32Error -ErrorCode $errCode))
     {
-        Write-Win32Error -ErrorCode $errCode
         return
     }
 
-    $result.ReferencedDomainName = $domainName.ToString()
-    $result.Name = $name.ToString()
-    $result.Use = $sidNameUse
-
-    return $result
+    return [pscustomobject]@{
+        Name = $name.ToString();
+        DomainName = $domainName.ToString();
+        Use = $sidNameUse;
+    }
 }
