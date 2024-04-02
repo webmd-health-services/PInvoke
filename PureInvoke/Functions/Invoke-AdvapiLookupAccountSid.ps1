@@ -1,12 +1,12 @@
 
-function Invoke-AdvapiLookupAccountSid
+function Invoke-AdvApiLookupAccountSid
 {
     <#
     .SYNOPSIS
     Calls the Advanced Windows 32 Base API (advapi32.dll) `LookupAccountSid` function.
 
     .DESCRIPTION
-    The `Invoke-AdvapiLookupAccountSid` function calls the advapi32.dll API's `LookupAccountSid` function, which looks up a
+    The `Invoke-AdvApiLookupAccountSid` function calls the advapi32.dll API's `LookupAccountSid` function, which looks up a
     SID and returns its account name, domain name, and use. Pass the SID as a byte array to the `Sid` parameter and the
     system name to the `SystemName` parameter, which are passed to `LookupAccountSid` as the `Sid` and `lpSystemName`
     arguments, respectively. The function returns an object with properties for each of the `LookupAccountSid`
@@ -16,7 +16,7 @@ function Invoke-AdvapiLookupAccountSid
     https://learn.microsoft.com/en-us/windows/win32/api/winbase/nf-winbase-lookupaccountsida
 
     .EXAMPLE
-    Invoke-AdvapiLookupAccountSid -Sid $sid
+    Invoke-AdvApiLookupAccountSid -Sid $sid
 
     Demonstrates how to call this function by passing a sid to the `Sid` parameter.
     #>
@@ -34,7 +34,7 @@ function Invoke-AdvapiLookupAccountSid
     $result = [pscustomobject]@{
         Name = '';
         ReferencedDomainName = ''
-        Use = [PureInvoke.AdvApi32+SidNameUse]::Unknown
+        Use = [PureInvoke.WinNT.SidNameUse]::Unknown
     }
 
     [Text.StringBuilder] $name = [Text.StringBuilder]::New()
@@ -44,7 +44,7 @@ function Invoke-AdvapiLookupAccountSid
     [Text.StringBuilder] $domainName = [Text.StringBuilder]::New()
     [UInt32] $cchDomainName = $domainName.Capacity;
 
-    [PureInvoke.AdvApi32+SidNameUse] $sidNameUse = [PureInvoke.AdvApi32+SidNameUse]::Unknown;
+    [PureInvoke.WinNT.SidNameUse] $sidNameUse = [PureInvoke.WinNT.SidNameUse]::Unknown;
 
     [PureInvoke.ErrorCode] $errCode = [PureInvoke.ErrorCode]::Ok
 

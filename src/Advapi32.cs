@@ -1,6 +1,8 @@
 using System;
 using System.Runtime.InteropServices;
 using System.Text;
+using PureInvoke.LsaLookup;
+using PureInvoke.WinNT;
 
 namespace PureInvoke
 {
@@ -33,21 +35,5 @@ namespace PureInvoke
 			ref uint cchReferencedDomainName,
 			out SidNameUse peUse
 		);
-
-		public enum SidNameUse
-		{
-			User = 1,
-			Group,
-			Domain,
-			Alias,
-			WellKnownGroup,
-			DeletedAccount,
-			Invalid,
-			Unknown,
-			Computer,
-			Label,
-			LogonSession
-		}
 	}
-
 }
