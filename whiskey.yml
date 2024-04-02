@@ -79,6 +79,9 @@ Build:
     ]
 
 Tests:
+- PowerShell:
+    ExceptDuring: Clean
+    ScriptBlock: prism install | Format-Table -Auto
 - Pester:
     Configuration:
         Run:
