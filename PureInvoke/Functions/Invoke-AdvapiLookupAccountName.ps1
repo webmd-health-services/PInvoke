@@ -48,7 +48,7 @@ function Invoke-AdvApiLookupAccountName
     [UInt32] $cchDomainName = $domainName.Capacity;
     [SidNameUse] $sidNameUse = [SidNameUse]::Unknown;
 
-    [PureInvoke.ErrorCode]$errCode = [PureInvoke.ErrorCode]::Ok
+    [PureInvoke.ErrorCode] $errCode = [PureInvoke.ErrorCode]::Ok
     $result = [AdvApi32]::LookupAccountName($SystemName, $AccountName, $sid, [ref] $cbSid, $domainName,
                                             [ref] $cchDomainName, [ref]$sidNameUse)
     $errCode = [Marshal]::GetLastWin32Error()
