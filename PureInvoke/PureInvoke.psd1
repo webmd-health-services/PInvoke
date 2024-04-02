@@ -123,7 +123,7 @@
             # A URL to an icon representing this module.
             # IconUri = ''
 
-            Prerelease = ''
+            Prerelease = 'rc3'
 
             # ReleaseNotes of this module
             ReleaseNotes = 'https://github.com/webmd-health-services/PureInvoke/blob/main/CHANGELOG.md'

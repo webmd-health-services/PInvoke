@@ -10,7 +10,7 @@ function Invoke-AdvApiLookupAccountName
     an account name and returns its domain, SID, and use. Pass the account name to the `AccountName` parameter and the
     system name to the `SystemName` parameter, which are passed to `LookupAccountName` as the `lpAccountName` and
     `lpSystemName` arguments, respectively. The function returns an object with properties for each of the
-    `LookupAccountName` function's out parameters: `ReferencedDomainName`, `Sid`, and `Use`.
+    `LookupAccountName` function's out parameters: `DomainName`, `Sid`, and `Use`.
 
     .LINK
     https://learn.microsoft.com/en-us/windows/win32/api/winbase/nf-winbase-lookupaccountnamea
@@ -33,53 +33,40 @@ function Invoke-AdvApiLookupAccountName
     Set-StrictMode -Version 'Latest'
     Use-CallerPreference -Cmdlet $PSCmdlet -Session $ExecutionContext.SessionState
 
-    $result = [pscustomobject]@{
-        ReferencedDomainName = '';
-        Sid = [byte[]]::New(0);
-        Use = [SidNameUse]::Unknown
-    }
-
     [byte[]] $sid = [byte[]]::New(0);
 
     # cb = count of bytes
     [UInt32] $cbSid = 0;
-    [StringBuilder] $domainName = [StringBuilder]::New()
+    [StringBuilder] $sbDomainName = [StringBuilder]::New()
     # cch = count of chars
-    [UInt32] $cchDomainName = $domainName.Capacity;
+    [UInt32] $cchDomainName = $sbDomainName.Capacity;
     [SidNameUse] $sidNameUse = [SidNameUse]::Unknown;
 
     [PureInvoke.ErrorCode] $errCode = [PureInvoke.ErrorCode]::Ok
-    $result = [AdvApi32]::LookupAccountName($SystemName, $AccountName, $sid, [ref] $cbSid, $domainName,
-                                            [ref] $cchDomainName, [ref]$sidNameUse)
+    [void][AdvApi32]::LookupAccountName($SystemName, $AccountName, $sid, [ref] $cbSid, $sbDomainName,
+                                        [ref] $cchDomainName, [ref]$sidNameUse)
     $errCode = [Marshal]::GetLastWin32Error()
-    if ($result)
-    {
-        Write-Win32Error -ErrorCode $errCode
-        return
-    }
 
     if ($errCode -eq [ErrorCode]::InsufficientBuffer -or $errCode -eq [ErrorCode]::InvalidFlags)
     {
         $sid = [byte[]]::New($cbSid);
-        [void]$domainName.EnsureCapacity([int]$cchDomainName);
-        $result = [AdvApi32]::LookupAccountName($SystemName, $AccountName, $sid, [ref] $cbSid, $domainName,
-                                                [ref] $cchDomainName, [ref] $sidNameUse)
+        [void]$sbDomainName.EnsureCapacity([int]$cchDomainName);
+        [void][AdvApi32]::LookupAccountName($SystemName, $AccountName, $sid, [ref] $cbSid, $sbDomainName,
+                                            [ref] $cchDomainName, [ref] $sidNameUse)
         $errCode = [Marshal]::GetLastWin32Error()
-        if (-not $result)
+        if (-not (Assert-Win32Error -ErrorCode $errCode))
         {
-            Write-Win32Error -ErrorCode $errCode
             return
         }
     }
-    else
+    elseif (-not (Assert-Win32Error -ErrorCode $errCode))
     {
-        Write-Win32Error -ErrorCode $errCode
         return
     }
 
-    $result.ReferencedDomainName = $domainName.ToString()
-    $result.Sid = $sid
-    $result.Use = $sidNameUse
-
-    return $result
+    return [pscustomobject]@{
+        DomainName = $sbDomainName.ToString();
+        Sid = $sid
+        Use = $sidNameUse
+    }
 }
