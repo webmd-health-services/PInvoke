@@ -17,3 +17,5 @@
   function.
 * Created `Invoke-KernelFindFileName` to call the kernel32.dll library's `FindFirstFileNameW` and `FindNextFileNameW`
   functions to find all the hardlinks to a file.
+* Created `Invoke-KernelGetVolumePathName` to call the kerndel32.dll library's `GetVolumePathName` function, which gets
+the volume mount point for a file.

@@ -85,7 +85,8 @@
         'Invoke-AdvApiLsaNtStatusToWinError',
         'Invoke-AdvApiLsaOpenPolicy',
         'Invoke-AdvApiLsaRemoveAccountRights',
-        'Invoke-KernelFindFileName'
+        'Invoke-KernelFindFileName',
+        'Invoke-KernelGetVolumePathName'
     )
 
     # Cmdlets to export from this module. By default, you get a script module, so there are no cmdlets.

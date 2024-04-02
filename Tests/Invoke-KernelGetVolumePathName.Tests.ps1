@@ -13,7 +13,7 @@ BeforeAll {
         Join-Path -Path ([Environment]::GetFolderPath('Windows') | Split-Path -Qualifier) -ChildPath '\'
 }
 
-Describe 'Invoke-KernelGetVolumePathName' -Skip {
+Describe 'Invoke-KernelGetVolumePathName' {
     BeforeEach {
         $Global:Error.Clear()
     }

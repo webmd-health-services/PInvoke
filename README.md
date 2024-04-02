@@ -48,3 +48,4 @@ considered private and not used. Only the exported PowerShell functions from thi
 ### Froom kernel32.dll
 
 * `Invoke-KernelFindFileName`
+* `Invoke-KernelGetVolumePathName`
