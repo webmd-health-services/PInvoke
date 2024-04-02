@@ -12,8 +12,13 @@
 # See the License for the specific language governing permissions and
 # limitations under the License
 
+using namespace PureInvoke
+using namespace PureInvoke.LsaLookup
+using namespace PureInvoke.WinNT
 using namespace System.ComponentModel
 using namespace System.Runtime.InteropServices
+using namespace System.Security.Principal
+using namespace System.Text
 
 #Requires -Version 5.1
 Set-StrictMode -Version 'Latest'

@@ -76,8 +76,15 @@
 
     # Functions to export from this module. Only list public function here.
     FunctionsToExport = @(
-        'Invoke-AdvapiLookupAccountName',
-        'Invoke-AdvapiLookupAccountSid',
+        'Invoke-AdvApiLookupAccountName',
+        'Invoke-AdvApiLookupAccountSid',
+        'Invoke-AdvApiLsaAddAccountRights',
+        'Invoke-AdvApiLsaClose',
+        'Invoke-AdvApiLsaEnumerateAccountRights',
+        'Invoke-AdvApiLsaFreeMemory',
+        'Invoke-AdvApiLsaNtStatusToWinError',
+        'Invoke-AdvApiLsaOpenPolicy',
+        'Invoke-AdvApiLsaRemoveAccountRights',
         'Invoke-KernelFindFileName'
     )
 

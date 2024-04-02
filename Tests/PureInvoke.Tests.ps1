@@ -54,7 +54,7 @@ BeforeAll {
 
         if( $HasDescription )
         {
-            $help.Description | Should -Not -BeNullOrEmpty
+            $help.Description | Should -Not -BeNullOrEmpty -Because "${Named} should have a description"
         }
 
         if( $HasExamples )
