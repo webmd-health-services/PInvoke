@@ -22,12 +22,12 @@ function Invoke-AdvApiLookupAccountName
     #>
     [CmdletBinding()]
     param(
-        # The name of the system.
-        [String] $SystemName,
-
         # The account name to lookup.
         [Parameter(Mandatory)]
-        [String] $AccountName
+        [String] $AccountName,
+
+        # The name of the system.
+        [String] $SystemName
     )
 
     Set-StrictMode -Version 'Latest'

@@ -22,10 +22,10 @@ function Invoke-AdvApiLookupAccountSid
     #>
     [CmdletBinding()]
     param(
-        [String] $SystemName,
-
         [Parameter(Mandatory)]
-        [byte[]] $Sid
+        [byte[]] $Sid,
+
+        [String] $SystemName
     )
 
     Set-StrictMode -Version 'Latest'

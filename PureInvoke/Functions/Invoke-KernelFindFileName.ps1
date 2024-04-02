@@ -25,6 +25,7 @@ function Invoke-KernelFindFileName
     #>
     [CmdletBinding()]
     param(
+        # The path to the file.
         [Parameter(Mandatory)]
         [String] $Path
     )

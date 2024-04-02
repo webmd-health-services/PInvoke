@@ -19,16 +19,16 @@ function Invoke-AdvApiLsaOpenPolicy
     #>
     [CmdletBinding()]
     param(
+        # The desired access for the policy handle. See the documentation for the LSA function/method the policy will
+        # be used with to discover what rights are needed.
+        [Parameter(Mandatory)]
+        [PolicyAccessRights] $DesiredAccess,
+
         # The optional computer name whose LSA policy to open. The default is the local computer.
         [String] $ComputerName,
 
         # The value of the `LsaOpenPolicy` method's `ObjectAttribute` parameter.
-        [LSA_OBJECT_ATTRIBUTES] $ObjectAttribute,
-
-        # The desired access for the policy handle. See the documentation for the LSA function/method the policy will
-        # be used with to discover what rights are needed.
-        [Parameter(Mandatory)]
-        [PolicyAccessRights] $DesiredAccess
+        [LSA_OBJECT_ATTRIBUTES] $ObjectAttribute
     )
 
     Set-StrictMode -Version 'Latest'
