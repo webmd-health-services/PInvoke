@@ -19,9 +19,9 @@ namespace PureInvoke.LsaLookup
 			}
 			else
 			{
-				Buffer = Marshal.StringToHGlobalAuto(inputString);
-				Length = (ushort)(inputString.Length * UnicodeEncoding.CharSize);
-				MaximumLength = (ushort)((inputString.Length + 1) * UnicodeEncoding.CharSize);
+				Buffer = Marshal.StringToHGlobalUni(inputString);
+				Length = (ushort)(inputString.Length * 2);
+				MaximumLength = (ushort)((inputString.Length + 1) * 2);
 			}
 		}
 
@@ -37,7 +37,7 @@ namespace PureInvoke.LsaLookup
 			for (ulong i = 0; i < length; i++)
 			{
 				var itemAddr = new IntPtr(ptr.ToInt64() + (long)(i * (ulong)Marshal.SizeOf(myLsaus)));
-				myLsaus = (LSA_UNICODE_STRING)Marshal.PtrToStructure(itemAddr, myLsaus.GetType());
+				myLsaus = Marshal.PtrToStructure<LSA_UNICODE_STRING>(itemAddr);
 				lsaStrings.Add(myLsaus);
 			}
 			return lsaStrings.ToArray();

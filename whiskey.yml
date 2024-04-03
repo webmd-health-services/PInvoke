@@ -21,7 +21,7 @@ Build:
     Path: src\PureInvoke.sln
 
 - CopyFile:
-    Path: src\bin\netstandard2.0\*
+    Path: src\bin\netstandard1.6\*
     DestinationDirectory: PureInvoke\bin
 
 # Dot-sourcing files is expensive. Move all functions into .psm1 file to improve import speed. Do this before testing

@@ -31,32 +31,34 @@ function Invoke-AdvApiLookupAccountSid
     Set-StrictMode -Version 'Latest'
     Use-CallerPreference -Cmdlet $PSCmdlet -Session $ExecutionContext.SessionState
 
-    [Text.StringBuilder] $name = [Text.StringBuilder]::New()
+    [StringBuilder] $name = [StringBuilder]::New()
     # cch = count of chars
     [UInt32] $cchName = $name.Capacity;
 
-    [Text.StringBuilder] $domainName = [Text.StringBuilder]::New()
+    [StringBuilder] $domainName = [StringBuilder]::New()
     [UInt32] $cchDomainName = $domainName.Capacity;
 
-    [PureInvoke.WinNT.SidNameUse] $sidNameUse = [PureInvoke.WinNT.SidNameUse]::Unknown;
+    [SidNameUse] $sidNameUse = [SidNameUse]::Unknown;
 
-    [PureInvoke.ErrorCode] $errCode = [PureInvoke.ErrorCode]::Ok
-
-    [void][PureInvoke.AdvApi32]::LookupAccountSid($SystemName, $sid, $name, [ref] $cchName, $domainName,
-                                                  [ref] $cchDomainName, [ref] $sidNameUse)
+    $result = [AdvApi32]::LookupAccountSid($SystemName, $sid, $name, [ref] $cchName, $domainName, [ref] $cchDomainName,
+                                           [ref] $sidNameUse)
     $errCode = [Marshal]::GetLastWin32Error()
-    if (($errCode -eq [PureInvoke.ErrorCode]::InsufficientBuffer))
-    {
-        [void]$name.EnsureCapacity($cchName);
-        [void]$domainName.EnsureCapacity($cchName);
-        [void][PureInvoke.AdvApi32]::LookupAccountSid($SystemName, $sid,  $name, [ref] $cchName, $domainName,
-                                                      $cchDomainName, [ref] $sidNameUse)
-        $errCode = [Marshal]::GetLastWin32Error()
-    }
 
-    if (-not (Assert-Win32Error -ErrorCode $errCode))
+    if (-not $result)
     {
-        return
+        if ($errCode -eq [PureInvoke.ErrorCode]::InsufficientBuffer)
+        {
+            [void]$name.EnsureCapacity($cchName);
+            [void]$domainName.EnsureCapacity($cchName);
+            $result = [AdvApi32]::LookupAccountSid($SystemName, $sid,  $name, [ref] $cchName, $domainName,
+                                                   [ref] $cchDomainName, [ref] $sidNameUse)
+            $errCode = [Marshal]::GetLastWin32Error()
+        }
+
+        if (-not $result -and -not (Assert-Win32Error -ErrorCode $errCode))
+        {
+            return
+        }
     }
 
     return [pscustomobject]@{

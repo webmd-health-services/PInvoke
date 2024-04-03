@@ -8,7 +8,7 @@ namespace PureInvoke
 {
 	public static class AdvApi32
 	{
-		[DllImport("advapi32.dll", CharSet=CharSet.Auto, SetLastError=true)]
+		[DllImport("advapi32.dll", CharSet=CharSet.Unicode, SetLastError=true)]
 		public static extern bool LookupAccountName(
 			string lpSystemName,
 			string lpAccountName,
@@ -19,7 +19,7 @@ namespace PureInvoke
 			out SidNameUse peUse
 		);
 
-		[DllImport("advapi32.dll", CharSet=CharSet.Auto, SetLastError=true)]
+		[DllImport("advapi32.dll", CharSet=CharSet.Unicode, SetLastError=true)]
 		public static extern bool LookupAccountSid(
 			string lpSystemName,
 			[MarshalAs(UnmanagedType.LPArray)] byte[] Sid,

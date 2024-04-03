@@ -42,26 +42,25 @@ function Invoke-AdvApiLookupAccountName
     [UInt32] $cchDomainName = $sbDomainName.Capacity;
     [SidNameUse] $sidNameUse = [SidNameUse]::Unknown;
 
-    [PureInvoke.ErrorCode] $errCode = [PureInvoke.ErrorCode]::Ok
-    [void][AdvApi32]::LookupAccountName($SystemName, $AccountName, $sid, [ref] $cbSid, $sbDomainName,
-                                        [ref] $cchDomainName, [ref]$sidNameUse)
+    $result = [AdvApi32]::LookupAccountName($SystemName, $AccountName, $sid, [ref] $cbSid, $sbDomainName,
+                                            [ref] $cchDomainName, [ref]$sidNameUse)
     $errCode = [Marshal]::GetLastWin32Error()
 
-    if ($errCode -eq [ErrorCode]::InsufficientBuffer -or $errCode -eq [ErrorCode]::InvalidFlags)
+    if (-not $result)
     {
-        $sid = [byte[]]::New($cbSid);
-        [void]$sbDomainName.EnsureCapacity([int]$cchDomainName);
-        [void][AdvApi32]::LookupAccountName($SystemName, $AccountName, $sid, [ref] $cbSid, $sbDomainName,
-                                            [ref] $cchDomainName, [ref] $sidNameUse)
-        $errCode = [Marshal]::GetLastWin32Error()
-        if (-not (Assert-Win32Error -ErrorCode $errCode))
+        if ($errCode -eq [ErrorCode]::InsufficientBuffer -or $errCode -eq [ErrorCode]::InvalidFlags)
+        {
+            $sid = [byte[]]::New($cbSid);
+            [void]$sbDomainName.EnsureCapacity([int]$cchDomainName);
+            $result = [AdvApi32]::LookupAccountName($SystemName, $AccountName, $sid, [ref] $cbSid, $sbDomainName,
+                                                    [ref] $cchDomainName, [ref] $sidNameUse)
+            $errCode = [Marshal]::GetLastWin32Error()
+        }
+
+        if (-not $result -and -not (Assert-Win32Error -ErrorCode $errCode))
         {
             return
         }
-    }
-    elseif (-not (Assert-Win32Error -ErrorCode $errCode))
-    {
-        return
     }
 
     return [pscustomobject]@{
