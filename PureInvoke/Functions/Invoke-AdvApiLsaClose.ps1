@@ -11,6 +11,9 @@ function Invoke-AdvApiLsaClose
     The function closes the policy and returns `$true` if the close succeeded. If the close fails, returns `$false` and
     writes an error.
 
+    Closing a handle more than once may result in a process crash. After closing a handle, it is recommended to set it
+    to `[IntPtr]::Zero` as a precaution. This function will ignore a policy handle set to `[IntPtr]::Zero`.
+
     .EXAMPLE
     Invoke-AdvApiLsaClose -PolicyHandle $handle
 
@@ -25,6 +28,11 @@ function Invoke-AdvApiLsaClose
 
     Set-StrictMode -Version 'Latest'
     Use-CallerPreference -Cmdlet $PSCmdlet -Session $ExecutionContext.SessionState
+
+    if ($PolicyHandle -eq [IntPtr]::Zero)
+    {
+        return $true
+    }
 
     $ntstatus = [PureInvoke.AdvApi32]::LsaClose($PolicyHandle)
     Assert-NTStatusSuccess -Status $ntstatus -Message 'Invoke-AdvApiLsaClose failed'

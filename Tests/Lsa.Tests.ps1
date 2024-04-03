@@ -108,7 +108,8 @@ Describe 'PureInvoke.Lsa' {
         Invoke-AdvApiLsaClose -PolicyHandle $policy | Should -BeTrue
         $Global:Error | Should -BeNullOrEmpty
 
-        Invoke-AdvApiLsaClose -PolicyHandle $policy -ErrorAction SilentlyContinue | Should -BeFalse
-        $Global:Error | Should -Match 'handle is invalid'
+        $policy = [IntPtr]::Zero
+
+        Invoke-AdvApiLsaClose -PolicyHandle $policy -ErrorAction SilentlyContinue | Should -BeTrue
     }
 }
