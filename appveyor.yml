@@ -60,8 +60,11 @@ for:
         $ProgressPreference = 'SilentlyContinue'
         iwr https://raw.githubusercontent.com/webmd-health-services/Prism/main/Scripts/init.ps1 | iex | Format-Table
         .\Get-PureInvokeZipArtifact.ps1 -Token $env:APPVEYOR_BEARER_TOKEN -JobName 'Build'
-        # $nonat = $false
-        # $blockRdp = $true; iex ((new-object net.webclient).DownloadString('https://raw.githubusercontent.com/appveyor/ci/master/scripts/enable-rdp.ps1'))
+        if ($env:ENABLE_RDP -eq 'True')
+        {
+          $nonat = $false
+          $blockRdp = $true; iex ((new-object net.webclient).DownloadString('https://raw.githubusercontent.com/appveyor/ci/master/scripts/enable-rdp.ps1'))
+        }
         .\build.ps1 -PipelineName 'Tests'
 
 # Build in PowerShell
@@ -73,6 +76,9 @@ for:
         $ProgressPreference = 'SilentlyContinue'
         iwr https://raw.githubusercontent.com/webmd-health-services/Prism/main/Scripts/init.ps1 | iex | Format-Table
         .\Get-PureInvokeZipArtifact.ps1 -Token $env:APPVEYOR_BEARER_TOKEN -JobName 'Build'
-        # $nonat = $false
-        # $blockRdp = $true; iex ((new-object net.webclient).DownloadString('https://raw.githubusercontent.com/appveyor/ci/master/scripts/enable-rdp.ps1'))
+        if ($env:ENABLE_RDP -eq 'True')
+        {
+          $nonat = $false
+          $blockRdp = $true; iex ((new-object net.webclient).DownloadString('https://raw.githubusercontent.com/appveyor/ci/master/scripts/enable-rdp.ps1'))
+        }
         .\build.ps1 -PipelineName 'Tests'
