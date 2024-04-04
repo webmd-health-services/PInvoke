@@ -43,18 +43,18 @@ function Invoke-AdvApiLookupAccountSid
 
     [SidNameUse] $sidNameUse = [SidNameUse]::Unknown;
 
-    $result = [AdvApi32]::LookupAccountSid($ComputerName, $sid, $name, [ref] $cchName, $domainName, [ref] $cchDomainName,
-                                           [ref] $sidNameUse)
+    $result = $script:advapi32::LookupAccountSid($ComputerName, $sid, $name, [ref] $cchName, $domainName,
+                                               [ref] $cchDomainName, [ref] $sidNameUse)
     $errCode = [Marshal]::GetLastWin32Error()
 
     if (-not $result)
     {
-        if ($errCode -eq [PureInvoke.ErrorCode]::InsufficientBuffer)
+        if ($errCode -eq [PureInvoke_ErrorCode]::InsufficientBuffer)
         {
             [void]$name.EnsureCapacity($cchName);
             [void]$domainName.EnsureCapacity($cchName);
-            $result = [AdvApi32]::LookupAccountSid($ComputerName, $sid,  $name, [ref] $cchName, $domainName,
-                                                   [ref] $cchDomainName, [ref] $sidNameUse)
+            $result = $script:advapi32::LookupAccountSid($ComputerName, $sid,  $name, [ref] $cchName, $domainName,
+                                                       [ref] $cchDomainName, [ref] $sidNameUse)
             $errCode = [Marshal]::GetLastWin32Error()
         }
 

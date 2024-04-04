@@ -1,4 +1,5 @@
 
+using module ..\PureInvoke
 using namespace PureInvoke
 using namespace System.ComponentModel
 
@@ -163,6 +164,6 @@ Describe 'Invoke-KernelFindFileName' {
     It 'fails if path does not exist' {
         WhenFinding 'idonotexist.txt' -ErrorAction SilentlyContinue
         ThenFound @()
-        ThenError -Matches ([Win32Exception]::New([PureInvoke.ErrorCode]::FileNotFound)).Message
+        ThenError -Matches ([Win32Exception]::New([PureInvoke_ErrorCode]::FileNotFound)).Message
     }
 }

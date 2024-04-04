@@ -26,6 +26,21 @@ $originalWhatIfPref = $Global:WhatIfPreference
 $Global:VerbosePreference = $VerbosePreference = 'SilentlyContinue'
 $Global:WhatIfPreference = $WhatIfPreference = $false
 
+# Create fake implementations of PureInvoke's static classes to ensure that PureInvoke explicitly uses types from the
+# assembly it ships with.
+foreach ($csFile in (Get-ChildItem -Path (Join-Path -Path $PSScriptRoot -ChildPath '..\src\' -Resolve) -Filter '*.cs'))
+{
+    Add-Type -TypeDefinition @"
+namespace PureInvoke
+{
+    public static class $($csFile.BaseName)
+    {
+        public static string Name { get { return "$($csFile.BaseName)"; } }
+    }
+}
+"@
+}
+
 try
 {
     $modules = [ordered]@{

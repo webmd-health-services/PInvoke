@@ -54,17 +54,17 @@ function Invoke-AdvApiLsaRemoveAccountRights
         if ($All)
         {
             $ntstatus =
-                [AdvApi32]::LsaRemoveAccountRights($PolicyHandle, $sidPtr, $true, [LSA_UNICODE_STRING[]]::New(0), 0)
+                $script:advApi32::LsaRemoveAccountRights($PolicyHandle, $sidPtr, $true, [LSA_UNICODE_STRING[]]::New(0), 0)
         }
         else
         {
             [LSA_UNICODE_STRING[]] $lsaPrivs = $Privilege | ConvertTo-LsaUnicodeString
             $ntstatus =
-                [AdvApi32]::LsaRemoveAccountRights($PolicyHandle, $sidPtr, $false, $lsaPrivs, $lsaPrivs.Length)
+                $script:advApi32::LsaRemoveAccountRights($PolicyHandle, $sidPtr, $false, $lsaPrivs, $lsaPrivs.Length)
         }
 
         $winErr = Invoke-AdvApiLsaNtStatusToWinError -Status $ntstatus
-        if ($winErr -eq [ErrorCode]::FileNotFound)
+        if ($winErr -eq [PureInvoke_ErrorCode]::FileNotFound)
         {
             return $true
         }

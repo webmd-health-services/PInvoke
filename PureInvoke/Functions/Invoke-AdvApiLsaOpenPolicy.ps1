@@ -22,7 +22,7 @@ function Invoke-AdvApiLsaOpenPolicy
         # The desired access for the policy handle. See the documentation for the LSA function/method the policy will
         # be used with to discover what rights are needed.
         [Parameter(Mandatory)]
-        [PolicyAccessRights] $DesiredAccess,
+        [PureInvoke_LsaLookup_PolicyAccessRights[]] $DesiredAccess,
 
         # The optional computer name whose LSA policy to open. The default is the local computer.
         [String] $ComputerName,
@@ -42,7 +42,7 @@ function Invoke-AdvApiLsaOpenPolicy
 
     if (-not $ObjectAttribute)
     {
-        $ObjectAttribute = [PureInvoke.LsaLookup.LSA_OBJECT_ATTRIBUTES]::New()
+        $ObjectAttribute = [LSA_OBJECT_ATTRIBUTES]::New()
         $ObjectAttribute.Length = 0
         $ObjectAttribute.RootDirectory = [IntPtr]::Zero
         $ObjectAttribute.Attributes = 0
@@ -51,9 +51,11 @@ function Invoke-AdvApiLsaOpenPolicy
     }
 
     $policyHandle = [IntPtr]::Zero
+    $accessMask = 0x0
+    $DesiredAccess | ForEach-Object { $accessMask = $accessMask -bor $_ }
 
-    $ntstatus =
-        [PureInvoke.AdvApi32]::LsaOpenPolicy([ref] $lsaSystemName, [ref] $ObjectAttribute, $DesiredAccess, [ref] $policyHandle)
+    $ntstatus = $script:advApi32::LsaOpenPolicy([ref] $lsaSystemName, [ref] $ObjectAttribute, $accessMask,
+                                                [ref] $policyHandle)
 
     if (-not (Assert-NtStatusSuccess -Status $ntstatus -Message "Invoke-AdvApiLsaOpenPolicy failed"))
     {

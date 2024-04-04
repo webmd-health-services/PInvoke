@@ -50,7 +50,7 @@ function Invoke-AdvApiLookupPrivilegeValue
     Use-CallerPreference -Cmdlet $PSCmdlet -Session $ExecutionContext.SessionState
 
     [LUID] $luid = [LUID]::New()
-    $result = [AdvApi32]::LookupPrivilegeValue($ComputerName, $Name, [ref] $luid)
+    $result = $script:advapi32::LookupPrivilegeValue($ComputerName, $Name, [ref] $luid)
     $errCode = [Marshal]::GetLastWin32Error()
 
     if (-not $result -and -not (Assert-Win32Error -ErrorCode $errCode))

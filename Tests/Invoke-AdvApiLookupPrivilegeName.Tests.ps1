@@ -25,7 +25,6 @@ Describe 'Invoke-AdvApiLookupPrivilegeName' {
         $luid = [PureInvoke.WinNT.LUID]::New()
         $luid.LowPart = $_
         $result = Invoke-AdvApiLookupPrivilegeName -LUID $luid
-        WRite-Host $result
         $Global:Error | Should -BeNullOrEmpty
         $result | Should -Not -BeNullOrEmpty
         $result | Should -Match '^Se.*Privilege$'
