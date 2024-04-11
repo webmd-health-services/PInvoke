@@ -1,26 +1,51 @@
-# Overview
+# PureInvoke PowerShell Module README
 
-The "PInvoke" module...
+## Overview
 
-# System Requirements
+The "PureInvoke" module is a wrapper around Win32 APIs. It attempts to hide the complexities of such calls from callers.
+The majority of its implementation is in pure PowerShell with a minimum amount in a compiled .NET assembly.
+
+## System Requirements
 
 * Windows PowerShell 5.1 and .NET 4.6.1+
-* PowerShell Core 6+
+* PowerShell 6+ on Windows
 
-# Installing
+## Installing
 
 To install globally:
 
 ```powershell
-Install-Module -Name 'PInvoke'
-Import-Module -Name 'PInvoke'
+Install-Module -Name 'PureInvoke'
+Import-Module -Name 'PureInvoke'
 ```
 
 To install privately:
 
 ```powershell
-Save-Module -Name 'PInvoke' -Path '.'
-Import-Module -Name '.\PInvoke'
+Save-Module -Name 'PureInvoke' -Path '.'
+Import-Module -Name '.\PureInvoke'
 ```
 
-# Commands
+## Usage
+
+Although some of the module's code is compiled into a .NET assembly, the assembly's types and implementation should be
+considered private and not used. Only the exported PowerShell functions from this module are considered public.
+
+## Commands
+
+### From advapi32.dll
+
+* `LookupAccountName`: `Invoke-AdvApiLookupAccountName`
+* `LookupAccountSid`: `Invoke-AdvApiLookupAccountSid`
+* `LsaAddAccountRights`: `Invoke-AdvApiLsaAddAccountRights`
+* `LsaClose`: `Invoke-AdvApiLsaClose`
+* `LsaEnumerateAccountRights`: `Invoke-AdvApiLsaEnumerateAccountRights`
+* `LsaFreeMemory`: `Invoke-AdvApiLsaFreeMemory`
+* `LsaNtStatusToWinError`: `Invoke-AdvApiLsaNtStatusToWinError`
+* `LsaOpenPolicy`: `Invoke-AdvApiLsaOpenPolicy`
+* `LsaRemoveAccountRights`: `Invoke-AdvApiLsaRemoveAccountRights`
+
+### From kernel32.dll
+
+* `Invoke-KernelFindFileName`
+* `Invoke-KernelGetVolumePathName`

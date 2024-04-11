@@ -7,18 +7,18 @@ BeforeAll {
 
     function GivenModuleLoaded
     {
-        Import-Module -Name (Join-Path -Path $PSScriptRoot -ChildPath '..\PInvoke\PInvoke.psd1' -Resolve)
-        Get-Module -Name 'PInvoke' | Add-Member -MemberType NoteProperty -Name 'NotReloaded' -Value $true
+        Import-Module -Name (Join-Path -Path $PSScriptRoot -ChildPath '..\PureInvoke\PureInvoke.psd1' -Resolve)
+        Get-Module -Name 'PureInvoke' | Add-Member -MemberType NoteProperty -Name 'NotReloaded' -Value $true
     }
 
     function GivenModuleNotLoaded
     {
-        Remove-Module -Name 'PInvoke' -Force -ErrorAction Ignore
+        Remove-Module -Name 'PureInvoke' -Force -ErrorAction Ignore
     }
 
     function ThenModuleLoaded
     {
-        $module = Get-Module -Name 'PInvoke'
+        $module = Get-Module -Name 'PureInvoke'
         $module | Should -Not -BeNullOrEmpty
         $module | Get-Member -Name 'NotReloaded' | Should -BeNullOrEmpty
     }
@@ -27,11 +27,11 @@ BeforeAll {
     {
         $script:importedAt = Get-Date
         Start-Sleep -Milliseconds 1
-        & (Join-Path -Path $PSScriptRoot -ChildPath '..\PInvoke\Import-PInvoke.ps1' -Resolve)
+        & (Join-Path -Path $PSScriptRoot -ChildPath '..\PureInvoke\Import-PureInvoke.ps1' -Resolve)
     }
 }
 
-Describe 'Import-PInvoke' {
+Describe 'Import-PureInvoke' {
     It 'should import the module' {
         GivenModuleNotLoaded
         WhenImporting

@@ -1,10 +1,10 @@
 <#
 .SYNOPSIS
-Gets your computer ready to develop the PInvoke module.
+Gets your computer ready to develop the PureInvoke module.
 
 .DESCRIPTION
 The init.ps1 script makes the configuraion changes necessary to get your computer ready to develop for the
-PInvoke module. It:
+PureInvoke module. It:
 
 
 .EXAMPLE

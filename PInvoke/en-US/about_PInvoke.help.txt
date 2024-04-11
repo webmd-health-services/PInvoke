@@ -1,8 +1,0 @@
-TOPIC
-    about_PInvoke
-
-SHORT DESCRIPTION
-    PInvoke is a PowerShell module for...
-
-LONG DESCRIPTION
-    The PInvoke PowerShell module...

@@ -14,16 +14,16 @@
 
 <#
 .SYNOPSIS
-Imports the PInvoke module into the current session.
+Imports the PureInvoke module into the current session.
 
 .DESCRIPTION
-The `Import-PInvoke.ps1` script imports the PInvoke module into the current session. If the module is already
+The `Import-PureInvoke.ps1` script imports the PureInvoke module into the current session. If the module is already
 loaded, it is removed, then reloaded.
 
 .EXAMPLE
-.\Import-PInvoke.ps1
+.\Import-PureInvoke.ps1
 
-Demonstrates how to use this script to import the PInvoke module  into the current PowerShell session.
+Demonstrates how to use this script to import the PureInvoke module  into the current PowerShell session.
 #>
 [CmdletBinding()]
 param(
@@ -40,12 +40,12 @@ $Global:WhatIfPreference = $WhatIfPreference = $false
 
 try
 {
-    if( (Get-Module -Name 'PInvoke') )
+    if( (Get-Module -Name 'PureInvoke') )
     {
-        Remove-Module -Name 'PInvoke' -Force
+        Remove-Module -Name 'PureInvoke' -Force
     }
 
-    Import-Module -Name (Join-Path -Path $PSScriptRoot -ChildPath 'PInvoke.psd1' -Resolve)
+    Import-Module -Name (Join-Path -Path $PSScriptRoot -ChildPath 'PureInvoke.psd1' -Resolve)
 }
 finally
 {

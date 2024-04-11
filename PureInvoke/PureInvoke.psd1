@@ -15,10 +15,10 @@
 @{
 
     # Script module or binary module file associated with this manifest.
-    RootModule = 'PInvoke.psm1'
+    RootModule = 'PureInvoke.psm1'
 
     # Version number of this module.
-    ModuleVersion = '0.0.0'
+    ModuleVersion = '1.0.0'
 
     # ID used to uniquely identify this module
     GUID = '3b4a73f4-c870-44fc-82b9-9a74dd0c647f'
@@ -36,7 +36,7 @@
     Copyright = '(c) WebMD Health Services.'
 
     # Description of the functionality provided by this module
-    Description = ''
+    Description = 'Exposes Win32 API functions as PowerShell commands using .NET''s platform invoke (e.g. p/invoke) capabilities.'
 
     # Minimum version of the Windows PowerShell engine required by this module
     PowerShellVersion = '5.1'
@@ -60,7 +60,7 @@
     # RequiredModules = @()
 
     # Assemblies that must be loaded prior to importing this module
-    # RequiredAssemblies = @( )
+    RequiredAssemblies = @('bin\PureInvoke.dll')
 
     # Script files (.ps1) that are run in the caller's environment prior to importing this module.
     # ScriptsToProcess = @()
@@ -76,6 +76,17 @@
 
     # Functions to export from this module. Only list public function here.
     FunctionsToExport = @(
+        'Invoke-AdvApiLookupAccountName',
+        'Invoke-AdvApiLookupAccountSid',
+        'Invoke-AdvApiLsaAddAccountRights',
+        'Invoke-AdvApiLsaClose',
+        'Invoke-AdvApiLsaEnumerateAccountRights',
+        'Invoke-AdvApiLsaFreeMemory',
+        'Invoke-AdvApiLsaNtStatusToWinError',
+        'Invoke-AdvApiLsaOpenPolicy',
+        'Invoke-AdvApiLsaRemoveAccountRights',
+        'Invoke-KernelFindFileName',
+        'Invoke-KernelGetVolumePathName'
     )
 
     # Cmdlets to export from this module. By default, you get a script module, so there are no cmdlets.
@@ -102,21 +113,21 @@
         PSData = @{
 
             # Tags applied to this module. These help with module discovery in online galleries.
-            Tags = @( 'Desktop', 'Core' )
+            Tags = @( 'Desktop', 'Core', 'pinvoke', 'platform', 'invoke', 'advapi32', 'lookupaccountname', 'lookupaccountsid' )
 
             # A URL to the license for this module.
             LicenseUri = 'http://www.apache.org/licenses/LICENSE-2.0'
 
             # A URL to the main website for this project.
-            ProjectUri = 'https://github.com/webmd-health-services/PInvoke'
+            ProjectUri = 'https://github.com/webmd-health-services/PureInvoke'
 
             # A URL to an icon representing this module.
             # IconUri = ''
 
-            Prerelease = ''
+            Prerelease = 'rc3'
 
             # ReleaseNotes of this module
-            ReleaseNotes = 'https://github.com/webmd-health-services/PInvoke/blob/main/CHANGELOG.md'
+            ReleaseNotes = 'https://github.com/webmd-health-services/PureInvoke/blob/main/CHANGELOG.md'
         } # End of PSData hashtable
 
     } # End of PrivateData hashtable

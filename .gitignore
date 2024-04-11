@@ -1,7 +1,11 @@
 /.output
 /PSModules
 /.vscode
-/PInvoke/CHANGELOG.md
-/PInvoke/LICENSE.txt
-/PInvoke/NOTICE.txt
-/PInvoke/README.md
+/PureInvoke/CHANGELOG.md
+/PureInvoke/LICENSE.txt
+/PureInvoke/NOTICE.txt
+/PureInvoke/README.md
+**/bin/**
+**/obj/**
+**/.vs/**
+/packages/
