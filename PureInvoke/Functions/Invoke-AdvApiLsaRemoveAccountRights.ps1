@@ -10,7 +10,7 @@ function Invoke-AdvApiLsaRemoveAccountRights
     which removes rights/privileges for an account. Pass the LSA policy handle to the `PolicyHandle` parameter. Pass the
     security identifier for the account to the `Sid` parameter. To remove *all* of the account's rights, use the `All`
     switch. Otherwise, pass the specific rights to remove to the `Privilege` parameter. If the removal succeeds, the
-    function returns `$true`, otherwise it returns $false and writes an error.
+    function returns `$true`, otherwise it returns `$false` and writes an error.
 
     In order to remove rights, the policy must be opened with the `LookupNames` access right.
 
@@ -22,7 +22,7 @@ function Invoke-AdvApiLsaRemoveAccountRights
     .EXAMPLE
     Invoke-AdvApiLsaRemoveAccountRights -PolicyHandle $handle -Sid $sid -Privilege 'SeBatchLogonRight'
 
-    Demonstrates how to remove a specific account's privilege.
+    Demonstrates how to remove a specific prilevege for an account.
     #>
     [CmdletBinding()]
     param(

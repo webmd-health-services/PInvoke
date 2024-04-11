@@ -45,7 +45,7 @@ considered private and not used. Only the exported PowerShell functions from thi
 * `LsaOpenPolicy`: `Invoke-AdvApiLsaOpenPolicy`
 * `LsaRemoveAccountRights`: `Invoke-AdvApiLsaRemoveAccountRights`
 
-### Froom kernel32.dll
+### From kernel32.dll
 
 * `Invoke-KernelFindFileName`
 * `Invoke-KernelGetVolumePathName`

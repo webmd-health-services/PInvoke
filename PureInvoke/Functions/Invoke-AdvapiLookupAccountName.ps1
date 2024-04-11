@@ -6,9 +6,9 @@ function Invoke-AdvApiLookupAccountName
     Calls the Advanced Windows 32 Base API (advapi32.dll) `LookupAccountName` function.
 
     .DESCRIPTION
-    The `Invoke-AdvApiLookupAccountName` function calls the advapi32.dll API's `LookupAccountName` function, which looks up
-    an account name and returns its domain, SID, and use. Pass the account name to the `AccountName` parameter and the
-    system name to the `SystemName` parameter, which are passed to `LookupAccountName` as the `lpAccountName` and
+    The `Invoke-AdvApiLookupAccountName` function calls the advapi32.dll API's `LookupAccountName` function, which looks
+    up an account name and returns its domain, SID, and use. Pass the account name to the `AccountName` parameter and
+    the system name to the `ComputerName` parameter, which are passed to `LookupAccountName` as the `lpAccountName` and
     `lpSystemName` arguments, respectively. The function returns an object with properties for each of the
     `LookupAccountName` function's out parameters: `DomainName`, `Sid`, and `Use`.
 
@@ -27,7 +27,7 @@ function Invoke-AdvApiLookupAccountName
         [String] $AccountName,
 
         # The name of the system.
-        [String] $SystemName
+        [String] $ComputerName
     )
 
     Set-StrictMode -Version 'Latest'
@@ -42,7 +42,7 @@ function Invoke-AdvApiLookupAccountName
     [UInt32] $cchDomainName = $sbDomainName.Capacity;
     [SidNameUse] $sidNameUse = [SidNameUse]::Unknown;
 
-    $result = [AdvApi32]::LookupAccountName($SystemName, $AccountName, $sid, [ref] $cbSid, $sbDomainName,
+    $result = [AdvApi32]::LookupAccountName($ComputerName, $AccountName, $sid, [ref] $cbSid, $sbDomainName,
                                             [ref] $cchDomainName, [ref]$sidNameUse)
     $errCode = [Marshal]::GetLastWin32Error()
 
@@ -52,7 +52,7 @@ function Invoke-AdvApiLookupAccountName
         {
             $sid = [byte[]]::New($cbSid);
             [void]$sbDomainName.EnsureCapacity([int]$cchDomainName);
-            $result = [AdvApi32]::LookupAccountName($SystemName, $AccountName, $sid, [ref] $cbSid, $sbDomainName,
+            $result = [AdvApi32]::LookupAccountName($ComputerName, $AccountName, $sid, [ref] $cbSid, $sbDomainName,
                                                     [ref] $cchDomainName, [ref] $sidNameUse)
             $errCode = [Marshal]::GetLastWin32Error()
         }
