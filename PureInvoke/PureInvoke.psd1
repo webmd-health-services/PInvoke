@@ -78,6 +78,8 @@
     FunctionsToExport = @(
         'Invoke-AdvApiLookupAccountName',
         'Invoke-AdvApiLookupAccountSid',
+        'Invoke-AdvApiLookupPrivilegeName',
+        'Invoke-AdvApiLookupPrivilegeValue',
         'Invoke-AdvApiLsaAddAccountRights',
         'Invoke-AdvApiLsaClose',
         'Invoke-AdvApiLsaEnumerateAccountRights',
@@ -124,7 +126,7 @@
             # A URL to an icon representing this module.
             # IconUri = ''
 
-            Prerelease = 'rc3'
+            Prerelease = ''
 
             # ReleaseNotes of this module
             ReleaseNotes = 'https://github.com/webmd-health-services/PureInvoke/blob/main/CHANGELOG.md'

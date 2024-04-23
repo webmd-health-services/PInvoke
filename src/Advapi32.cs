@@ -30,6 +30,19 @@ namespace PureInvoke
 			out SidNameUse peUse
 		);
 
+		[DllImport("advapi32.dll", SetLastError = true)]
+		[return: MarshalAs(UnmanagedType.Bool)]
+		public static extern bool LookupPrivilegeName(
+			string lpSystemName,
+			IntPtr lpLuid,
+			StringBuilder lpName,
+			ref uint cbName
+		);
+
+		[DllImport("advapi32.dll", SetLastError = true)]
+		[return: MarshalAs(UnmanagedType.Bool)]
+		public static extern bool LookupPrivilegeValue(string lpSystemName, string lpName, ref LUID lpLuid);
+
 		[DllImport("advapi32.dll", CharSet=CharSet.Unicode)]
 		public static extern uint LsaAddAccountRights(
 			IntPtr PolicyHandle,

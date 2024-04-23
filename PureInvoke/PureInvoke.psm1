@@ -28,6 +28,60 @@ Set-StrictMode -Version 'Latest'
 # module in development has its functions in the Functions directory.
 $script:moduleRoot = $PSScriptRoot
 
+# There could be multiple PureInvoke.dll assemblies loaded.
+$pureInvokeDllPath = Join-Path -Path $script:moduleRoot -ChildPath 'bin\PureInvoke.dll' -Resolve
+$pureInvokeDll = [AppDomain]::CurrentDomain.GetAssemblies() | Where-Object 'Location' -EQ $pureInvokeDllPath
+$pureInvokeTypes = $pureInvokeDll.GetTypes()
+$script:advApi32 = $pureInvokeTypes | Where-Object 'Name' -EQ 'AdvApi32'
+$script:kernel32 = $pureInvokeTypes | Where-Object 'Name' -EQ 'Kernel32'
+
+# Constants
+[IntPtr] $script:invalidHandle = -1
+$script:maxPath = 65535
+
+enum PureInvoke_ErrorCode
+{
+    Ok                       = 0x000
+    NERR_Success             = 0x000
+    Success                  = 0x000
+    InvalidFunction          = 0x001
+    FileNotFound             = 0x002
+    AccessDenied             = 0x005
+    InvalidHandle            = 0x006
+    HandleEof                = 0x026    #   38
+    InvalidParameter         = 0x057    #   87
+    InsufficientBuffer       = 0x07A    #  122
+    AlreadyExists            = 0x0B7    #  183
+    EnvVarNotFound           = 0x0cb    #  203
+    MoreData                 = 0x0ea    #  234
+    NoMoreItems              = 0x103    #  259
+    InvalidFlags             = 0x3EC    # 1004
+    ServiceMarkedForDelete   = 0x430    # 1072
+    NoneMapped               = 0x534    # 1332
+    MemberNotInAlias         = 0x561    # 1377
+    MemberInAlias            = 0x562    # 1378
+    NoSuchMember             = 0x56B    # 1387
+    InvalidMember            = 0x56C    # 1388
+    NERR_GroupNotFound       = 0x8AC    # 2220
+}
+
+[Flags()]
+enum PureInvoke_LsaLookup_PolicyAccessRights
+{
+    LocalInformation = 0x1
+    AuditInformation = 0x2
+    GetPrivateInformation = 0x4
+    TrustAdmin = 0x8
+    CreateAccount = 0x10
+    CreateSecret = 0x20
+    CreatePrivilege = 0x40
+    SetQuotaDefaultLimits = 0x80
+    SetAuditRequirements = 0x100
+    AuditLogAdmin = 0x200
+    ServerAdmin = 0x400
+    LookupNames = 0x800
+    Notification = 0x1000
+}
 
 # Store each of your module's functions in its own file in the Functions
 # directory. On the build server, your module's functions will be appended to

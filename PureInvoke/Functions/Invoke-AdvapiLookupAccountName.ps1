@@ -42,18 +42,19 @@ function Invoke-AdvApiLookupAccountName
     [UInt32] $cchDomainName = $sbDomainName.Capacity;
     [SidNameUse] $sidNameUse = [SidNameUse]::Unknown;
 
-    $result = [AdvApi32]::LookupAccountName($ComputerName, $AccountName, $sid, [ref] $cbSid, $sbDomainName,
-                                            [ref] $cchDomainName, [ref]$sidNameUse)
+    $result = $script:advapi32::LookupAccountName($ComputerName, $AccountName, $sid, [ref] $cbSid, $sbDomainName,
+                                                [ref] $cchDomainName, [ref]$sidNameUse)
     $errCode = [Marshal]::GetLastWin32Error()
 
     if (-not $result)
     {
-        if ($errCode -eq [ErrorCode]::InsufficientBuffer -or $errCode -eq [ErrorCode]::InvalidFlags)
+        if ($errCode -eq [PureInvoke_ErrorCode]::InsufficientBuffer -or `
+            $errCode -eq [PureInvoke_ErrorCode]::InvalidFlags)
         {
             $sid = [byte[]]::New($cbSid);
             [void]$sbDomainName.EnsureCapacity([int]$cchDomainName);
-            $result = [AdvApi32]::LookupAccountName($ComputerName, $AccountName, $sid, [ref] $cbSid, $sbDomainName,
-                                                    [ref] $cchDomainName, [ref] $sidNameUse)
+            $result = $script:advapi32::LookupAccountName($ComputerName, $AccountName, $sid, [ref] $cbSid, $sbDomainName,
+                                                        [ref] $cchDomainName, [ref] $sidNameUse)
             $errCode = [Marshal]::GetLastWin32Error()
         }
 

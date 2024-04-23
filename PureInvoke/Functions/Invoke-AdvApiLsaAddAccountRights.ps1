@@ -43,7 +43,7 @@ function Invoke-AdvApiLsaAddAccountRights
 
     try
     {
-        $ntstatus = [AdvApi32]::LsaAddAccountRights($PolicyHandle, $sidPtr, $lsaPrivs, $lsaPrivs.Length)
+        $ntstatus = $script:advApi32::LsaAddAccountRights($PolicyHandle, $sidPtr, $lsaPrivs, $lsaPrivs.Length)
 
         Assert-NTStatusSuccess -Status $ntstatus -Message 'LsaAddAccountRights failed'
     }

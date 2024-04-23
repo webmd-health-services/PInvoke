@@ -5,6 +5,9 @@
 
 * Created `Invoke-AdvApiLookupAccountName` function to call the advapi32.dll library's `LookupAccountName` function.
 * Created `Invoke-AdvApiLookupAccountSid` function to call the advapi32.dll library's `LookupAccountSid` function.
+* Created `Invoke-AdvApiLookupPrivilegeName` function to call the advapi32.dll library's `LookupPrivilegeName` function.
+* Created `Invoke-AdvApiLookupPrivilegeValue` function to call the advapi32.dll library's `LookupPrivilegeValue`
+  function.
 * Created `Invoke-AdvApiLsaAddAccountRights` function to call the advapi32.dll library's `LsaAddAccountRights` function.
 * Created `Invoke-AdvApiLsaClose` function to call the advapi32.dll library's `LsaClose` function.
 * Created `Invoke-AdvApiLsaEnumerateAccountRights` function to call the advapi32.dll library's
@@ -18,4 +21,4 @@
 * Created `Invoke-KernelFindFileName` to call the kernel32.dll library's `FindFirstFileNameW` and `FindNextFileNameW`
   functions to find all the hardlinks to a file.
 * Created `Invoke-KernelGetVolumePathName` to call the kerndel32.dll library's `GetVolumePathName` function, which gets
-the volume mount point for a file.
+  the volume mount point for a file.

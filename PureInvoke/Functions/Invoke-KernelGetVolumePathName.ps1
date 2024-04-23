@@ -24,9 +24,9 @@ function Invoke-KernelGetVolumePathName
     Set-StrictMode -Version 'Latest'
     Use-CallerPreference -Cmdlet $PSCmdlet -Session $ExecutionContext.SessionState
 
-    $sbPath = [Text.StringBuilder]::New([PureInvoke.Kernel32]::MAX_PATH)
+    $sbPath = [StringBuilder]::New($script:maxPath)
     $cchPath = [UInt32]$sbPath.Capacity # in/out character-count variable for the WinAPI calls.
-    $result = [PureInvoke.Kernel32]::GetVolumePathName($Path, $sbPath, $cchPath)
+    $result = $script:kernel32::GetVolumePathName($Path, $sbPath, $cchPath)
     $errCode = [Marshal]::GetLastWin32Error()
     $msg = "[Kernel32]::GetVolumePathName(""${Path}"", [out] ""${sbPath}"", ${cchPath})  return ${result}  " +
            "GetLastError() ${errCode}"

@@ -20,9 +20,5 @@ namespace PureInvoke
 
 		[DllImport("kernel32.dll")]
 		public static extern IntPtr LocalFree(IntPtr hMem);
-
-		public static readonly IntPtr INVALID_HANDLE_VALUE = (IntPtr)(-1); // 0xffffffff;
-
-		public const int MAX_PATH = 65535; // Max. NTFS path length.
 	}
 }

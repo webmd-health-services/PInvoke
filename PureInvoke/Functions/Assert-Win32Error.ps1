@@ -12,7 +12,7 @@ function Assert-Win32Error
     Set-StrictMode -Version 'Latest'
     Use-CallerPreference -Cmdlet $PSCmdlet -Session $ExecutionContext.SessionState
 
-    if ($ErrorCode -eq 0x0)
+    if ($ErrorCode -eq [PureInvoke_ErrorCode]::Ok)
     {
         return $true
     }
