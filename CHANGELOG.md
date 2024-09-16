@@ -22,3 +22,4 @@
   functions to find all the hardlinks to a file.
 * Created `Invoke-KernelGetVolumePathName` to call the kerndel32.dll library's `GetVolumePathName` function, which gets
   the volume mount point for a file.
+* Created `Invoke-NetApiNetLocalGroupGetMembers` to call the netapi32.dll library's `NetLocalGroupGetMembers` function.
