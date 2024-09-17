@@ -41,7 +41,7 @@ function Invoke-AdvApiLookupAccountSid
     [StringBuilder] $domainName = [StringBuilder]::New()
     [UInt32] $cchDomainName = $domainName.Capacity;
 
-    [SidNameUse] $sidNameUse = [SidNameUse]::Unknown;
+    [PureInvoke.WinNT.SidNameUse] $sidNameUse = [PureInvoke.WinNT.SidNameUse]::Unknown;
 
     $result = $script:advapi32::LookupAccountSid($ComputerName, $sid, $name, [ref] $cchName, $domainName,
                                                [ref] $cchDomainName, [ref] $sidNameUse)

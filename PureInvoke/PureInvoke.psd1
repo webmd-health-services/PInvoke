@@ -60,7 +60,7 @@
     # RequiredModules = @()
 
     # Assemblies that must be loaded prior to importing this module
-    RequiredAssemblies = @('bin\PureInvoke.dll')
+    # RequiredAssemblies = @()
 
     # Script files (.ps1) that are run in the caller's environment prior to importing this module.
     # ScriptsToProcess = @()
@@ -96,10 +96,10 @@
     # CmdletsToExport = @()
 
     # Variables to export from this module. Don't export variables except in RARE instances.
-    VariablesToExport = @()
+    # VariablesToExport = @()
 
     # Aliases to export from this module. Don't create/export aliases. It can pollute your user's sessions.
-    AliasesToExport = @()
+    # AliasesToExport = @()
 
     # DSC resources to export from this module
     # DscResourcesToExport = @()

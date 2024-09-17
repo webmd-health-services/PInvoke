@@ -12,6 +12,6 @@ function ConvertTo-LsaUnicodeString
         Set-StrictMode -Version 'Latest'
         Use-CallerPreference -Cmdlet $PSCmdlet -Session $ExecutionContext.SessionState
 
-        [LSA_UNICODE_STRING]::New($InputObject) | Write-Output
+        [PureInvoke.LsaLookup.LSA_UNICODE_STRING]::New($InputObject) | Write-Output
     }
 }

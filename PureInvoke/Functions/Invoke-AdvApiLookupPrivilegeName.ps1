@@ -24,7 +24,7 @@ function Invoke-AdvApiLookupPrivilegeName
     param(
         # The privilege value whose name to lookup.
         [Parameter(Mandatory)]
-        [LUID] $LUID,
+        [PureInvoke.WinNT.LUID] $LUID,
 
         # The computer name on which to lookup the value. This parameter is passed to the `LookupPrivilegeValue`
         # function's `SystemName` parameter, i.e. the lookup on the remote computer is done by `LookupPrivilegeValue`

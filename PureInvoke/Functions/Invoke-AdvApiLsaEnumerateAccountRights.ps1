@@ -55,7 +55,8 @@ function Invoke-AdvApiLsaEnumerateAccountRights
             return
         }
 
-        [LSA_UNICODE_STRING[]] $lsaPrivs = [LSA_UNICODE_STRING]::PtrToLsaUnicodeStrings($rightsPtr, $rightsCount)
+        [PureInvoke.LsaLookup.LSA_UNICODE_STRING[]] $lsaPrivs =
+            [PureInvoke.LsaLookup.LSA_UNICODE_STRING]::PtrToLsaUnicodeStrings($rightsPtr, $rightsCount)
         foreach ($lsaPriv in $lsaPrivs)
         {
             $lsaPrivLength = $lsaPriv.Length/[Text.UnicodeEncoding]::CharSize
