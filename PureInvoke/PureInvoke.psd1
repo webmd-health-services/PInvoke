@@ -18,7 +18,7 @@
     RootModule = 'PureInvoke.psm1'
 
     # Version number of this module.
-    ModuleVersion = '1.0.0'
+    ModuleVersion = '1.0.1'
 
     # ID used to uniquely identify this module
     GUID = '3b4a73f4-c870-44fc-82b9-9a74dd0c647f'
@@ -60,7 +60,7 @@
     # RequiredModules = @()
 
     # Assemblies that must be loaded prior to importing this module
-    # RequiredAssemblies = @()
+    RequiredAssemblies = @('bin\PureInvoke.dll')
 
     # Script files (.ps1) that are run in the caller's environment prior to importing this module.
     # ScriptsToProcess = @()

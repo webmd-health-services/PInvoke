@@ -54,8 +54,8 @@ function Invoke-AdvApiLsaOpenPolicy
     $accessMask = 0x0
     $DesiredAccess | ForEach-Object { $accessMask = $accessMask -bor $_ }
 
-    $ntstatus = $script:advApi32::LsaOpenPolicy([ref] $lsaSystemName, [ref] $ObjectAttribute, $accessMask,
-                                                [ref] $policyHandle)
+    $ntstatus = [PureInvoke.AdvApi32]::LsaOpenPolicy([ref] $lsaSystemName, [ref] $ObjectAttribute, $accessMask,
+                                                     [ref] $policyHandle)
 
     if (-not (Assert-NtStatusSuccess -Status $ntstatus -Message "Invoke-AdvApiLsaOpenPolicy failed"))
     {

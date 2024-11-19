@@ -79,14 +79,14 @@ function Invoke-NetApiNetLocalGroupGetMembers
 
     do
     {
-        $status = $script:netapi32::NetLocalGroupGetMembers($ComputerName,
-                                                            $LocalGroupName,
-                                                            $Level,
-                                                            [ref] $buffer,
-                                                            -1,
-                                                            [ref] $entriesRead,
-                                                            [ref] $totalEntries,
-                                                            [ref] $resume)
+        $status = [PureInvoke.NetApi32]::NetLocalGroupGetMembers($ComputerName,
+                                                                 $LocalGroupName,
+                                                                 $Level,
+                                                                 [ref] $buffer,
+                                                                 -1,
+                                                                 [ref] $entriesRead,
+                                                                 [ref] $totalEntries,
+                                                                 [ref] $resume)
         if ($status -ne [PureInvoke_ErrorCode]::NERR_Success)
         {
             $msg = "Failed getting members of group ""${LocalGroupName}"""
@@ -104,7 +104,7 @@ function Invoke-NetApiNetLocalGroupGetMembers
                     Write-Output
                 $itemAddr = [IntPtr]::New($itemAddr.ToInt64() + [Int64][Marshal]::SizeOf($member))
             }
-            $status = $script:netapi32::NetApiBufferFree($buffer)
+            $status = [PureInvoke.NetApi32]::NetApiBufferFree($buffer)
             Assert-Win32Error -ErrorCode $status | Out-Null
         }
     }

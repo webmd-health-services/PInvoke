@@ -1,7 +1,17 @@
 
 # PureInvoke PowerShell Module Changelog
 
+## 1.0.1
+
+### Fixed
+
+* Errors  when multiple instances of PureInvoke are imported. Tried to do shenanigans where the module always used the
+  assembly from the module, but PowerShell had other ideas.
+* `Invoke-NetApiNetLocalGroupGetMembers` fails with error about missing type member.
+
 ## 1.0.0
+
+> Released 18 Nov 2024
 
 * Created `Invoke-AdvApiLookupAccountName` function to call the advapi32.dll library's `LookupAccountName` function.
 * Created `Invoke-AdvApiLookupAccountSid` function to call the advapi32.dll library's `LookupAccountSid` function.
