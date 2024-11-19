@@ -39,7 +39,7 @@ function Invoke-AdvApiLsaAddAccountRights
 
     $sidPtr = ConvertTo-IntPtr -Sid $Sid
 
-    [LSA_UNICODE_STRING[]] $lsaPrivs = $Privilege | ConvertTo-LsaUnicodeString
+    [PureInvoke.LsaLookup.LSA_UNICODE_STRING[]] $lsaPrivs = $Privilege | ConvertTo-LsaUnicodeString
 
     try
     {

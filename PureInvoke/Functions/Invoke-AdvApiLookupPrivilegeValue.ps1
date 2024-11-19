@@ -49,7 +49,7 @@ function Invoke-AdvApiLookupPrivilegeValue
     Set-StrictMode -Version 'Latest'
     Use-CallerPreference -Cmdlet $PSCmdlet -Session $ExecutionContext.SessionState
 
-    [LUID] $luid = [LUID]::New()
+    [PureInvoke.WinNT.LUID] $luid = [PureInvoke.WinNT.LUID]::New()
     $result = $script:advapi32::LookupPrivilegeValue($ComputerName, $Name, [ref] $luid)
     $errCode = [Marshal]::GetLastWin32Error()
 

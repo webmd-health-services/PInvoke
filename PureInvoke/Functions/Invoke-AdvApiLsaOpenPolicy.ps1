@@ -28,21 +28,21 @@ function Invoke-AdvApiLsaOpenPolicy
         [String] $ComputerName,
 
         # The value of the `LsaOpenPolicy` method's `ObjectAttribute` parameter.
-        [LSA_OBJECT_ATTRIBUTES] $ObjectAttribute
+        [PureInvoke.LsaLookup.LSA_OBJECT_ATTRIBUTES] $ObjectAttribute
     )
 
     Set-StrictMode -Version 'Latest'
     Use-CallerPreference -Cmdlet $PSCmdlet -Session $ExecutionContext.SessionState
 
-    $lsaSystemName = [LSA_UNICODE_STRING]::New([Environment]::MachineName)
+    $lsaSystemName = [PureInvoke.LsaLookup.LSA_UNICODE_STRING]::New([Environment]::MachineName)
     if ($ComputerName)
     {
-        $lsaSystemName = [LSA_UNICODE_STRING]::New($ComputerName)
+        $lsaSystemName = [PureInvoke.LsaLookup.LSA_UNICODE_STRING]::New($ComputerName)
     }
 
     if (-not $ObjectAttribute)
     {
-        $ObjectAttribute = [LSA_OBJECT_ATTRIBUTES]::New()
+        $ObjectAttribute = [PureInvoke.LsaLookup.LSA_OBJECT_ATTRIBUTES]::New()
         $ObjectAttribute.Length = 0
         $ObjectAttribute.RootDirectory = [IntPtr]::Zero
         $ObjectAttribute.Attributes = 0

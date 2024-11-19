@@ -12,9 +12,6 @@
 # See the License for the specific language governing permissions and
 # limitations under the License
 
-using namespace PureInvoke
-using namespace PureInvoke.LsaLookup
-using namespace PureInvoke.WinNT
 using namespace System.ComponentModel
 using namespace System.Runtime.InteropServices
 using namespace System.Security.Principal
@@ -30,10 +27,11 @@ $script:moduleRoot = $PSScriptRoot
 
 # There could be multiple PureInvoke.dll assemblies loaded.
 $pureInvokeDllPath = Join-Path -Path $script:moduleRoot -ChildPath 'bin\PureInvoke.dll' -Resolve
-$pureInvokeDll = [AppDomain]::CurrentDomain.GetAssemblies() | Where-Object 'Location' -EQ $pureInvokeDllPath
+$pureInvokeDll = [Reflection.Assembly]::LoadFile($pureInvokeDllPath)
 $pureInvokeTypes = $pureInvokeDll.GetTypes()
 $script:advApi32 = $pureInvokeTypes | Where-Object 'Name' -EQ 'AdvApi32'
 $script:kernel32 = $pureInvokeTypes | Where-Object 'Name' -EQ 'Kernel32'
+$script:netapi32 = $pureInvokeTypes | Where-Object 'Name' -eQ 'NetApi32'
 
 # Constants
 [IntPtr] $script:invalidHandle = -1
@@ -58,11 +56,13 @@ enum PureInvoke_ErrorCode
     InvalidFlags             = 0x3EC    # 1004
     ServiceMarkedForDelete   = 0x430    # 1072
     NoneMapped               = 0x534    # 1332
+    NoSuchAlias              = 0x560    # 1376
     MemberNotInAlias         = 0x561    # 1377
     MemberInAlias            = 0x562    # 1378
     NoSuchMember             = 0x56B    # 1387
     InvalidMember            = 0x56C    # 1388
     NERR_GroupNotFound       = 0x8AC    # 2220
+    NERR_InvalidComputer     = 0x92f    # 2351
 }
 
 [Flags()]
