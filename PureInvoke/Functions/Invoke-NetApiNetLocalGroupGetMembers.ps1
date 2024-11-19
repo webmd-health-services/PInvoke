@@ -80,13 +80,13 @@ function Invoke-NetApiNetLocalGroupGetMembers
     do
     {
         $status = [PureInvoke.NetApi32]::NetLocalGroupGetMembers($ComputerName,
-                                                            $LocalGroupName,
-                                                            $Level,
-                                                            [ref] $buffer,
-                                                            -1,
-                                                            [ref] $entriesRead,
-                                                            [ref] $totalEntries,
-                                                            [ref] $resume)
+                                                                 $LocalGroupName,
+                                                                 $Level,
+                                                                 [ref] $buffer,
+                                                                 -1,
+                                                                 [ref] $entriesRead,
+                                                                 [ref] $totalEntries,
+                                                                 [ref] $resume)
         if ($status -ne [PureInvoke_ErrorCode]::NERR_Success)
         {
             $msg = "Failed getting members of group ""${LocalGroupName}"""

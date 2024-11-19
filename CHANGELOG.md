@@ -3,8 +3,11 @@
 
 ## 1.0.1
 
-Fixed: strange error messages when multiple instances of PureInvoke are imported. Tried to do shenanigans where the
-module always used the assembly from the module, but PowerShell had other ideas.
+### Fixed
+
+* Errors  when multiple instances of PureInvoke are imported. Tried to do shenanigans where the module always used the
+  assembly from the module, but PowerShell had other ideas.
+* `Invoke-NetApiNetLocalGroupGetMembers` fails with error about missing type member.
 
 ## 1.0.0
 
