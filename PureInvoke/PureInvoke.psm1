@@ -25,14 +25,6 @@ Set-StrictMode -Version 'Latest'
 # module in development has its functions in the Functions directory.
 $script:moduleRoot = $PSScriptRoot
 
-# There could be multiple PureInvoke.dll assemblies loaded.
-$pureInvokeDllPath = Join-Path -Path $script:moduleRoot -ChildPath 'bin\PureInvoke.dll' -Resolve
-$pureInvokeDll = [Reflection.Assembly]::LoadFile($pureInvokeDllPath)
-$pureInvokeTypes = $pureInvokeDll.GetTypes()
-$script:advApi32 = $pureInvokeTypes | Where-Object 'Name' -EQ 'AdvApi32'
-$script:kernel32 = $pureInvokeTypes | Where-Object 'Name' -EQ 'Kernel32'
-$script:netapi32 = $pureInvokeTypes | Where-Object 'Name' -eQ 'NetApi32'
-
 # Constants
 [IntPtr] $script:invalidHandle = -1
 $script:maxPath = 65535

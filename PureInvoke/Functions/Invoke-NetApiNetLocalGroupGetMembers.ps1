@@ -79,7 +79,7 @@ function Invoke-NetApiNetLocalGroupGetMembers
 
     do
     {
-        $status = $script:netapi32::NetLocalGroupGetMembers($ComputerName,
+        $status = [PureInvoke.NetApi32]::NetLocalGroupGetMembers($ComputerName,
                                                             $LocalGroupName,
                                                             $Level,
                                                             [ref] $buffer,
@@ -104,7 +104,7 @@ function Invoke-NetApiNetLocalGroupGetMembers
                     Write-Output
                 $itemAddr = [IntPtr]::New($itemAddr.ToInt64() + [Int64][Marshal]::SizeOf($member))
             }
-            $status = $script:netapi32::NetApiBufferFree($buffer)
+            $status = [PureInvoke.NetApi32]::NetApiBufferFree($buffer)
             Assert-Win32Error -ErrorCode $status | Out-Null
         }
     }

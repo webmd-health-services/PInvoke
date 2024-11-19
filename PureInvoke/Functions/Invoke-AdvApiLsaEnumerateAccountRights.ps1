@@ -42,7 +42,8 @@ function Invoke-AdvApiLsaEnumerateAccountRights
     try
     {
         [UInt32] $rightsCount = 0
-        $ntstatus = $script:advApi32::LsaEnumerateAccountRights($PolicyHandle, $sidPtr, [ref] $rightsPtr, [ref] $rightsCount)
+        $ntstatus = [PureInvoke.AdvApi32]::LsaEnumerateAccountRights($PolicyHandle, $sidPtr, [ref] $rightsPtr,
+                                                                     [ref] $rightsCount)
 
         $win32Err = Invoke-AdvApiLsaNtStatusToWinError -Status $ntstatus
         if ($win32Err -eq [PureInvoke_ErrorCode]::FileNotFound)
