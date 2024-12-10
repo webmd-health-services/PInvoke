@@ -1,7 +1,13 @@
 
 # PureInvoke PowerShell Module Changelog
 
+## 1.0.2
+
+Allow importing of .psm1 file so users can keep nested scopes to a minimum when importing PureInvoke as a nested module.
+
 ## 1.0.1
+
+> Released 19 Nov 2024
 
 ### Fixed
 
